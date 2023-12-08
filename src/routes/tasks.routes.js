@@ -31,7 +31,7 @@ function authenticateToken(req, res, next) {
 }
 
 router.get("/", authenticateToken, taskController.getAllTasks);
-router.get("/:id", authenticateToken ,taskController.getTaskByTitle);
+router.get("/:id", authenticateToken ,taskController.getTaskById);
 router.post("/", authenticateToken, taskController.addTask);
 router.put("/:id", authenticateToken, taskController.updateTask)
 router.delete("/:id", authenticateToken, taskController.deleteTask)

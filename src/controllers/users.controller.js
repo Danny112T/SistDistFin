@@ -76,18 +76,38 @@ exports.addUser = async (req, res) => {
   try {
     const { name, lastname, user, email, svpassword } = req.body;
     if (
-      name == undefined ||
-      lastname == undefined ||
-      user == undefined ||
-      email == undefined ||
-      svpassword == undefined
+      name == undefined
     ) {
       res.status(400).json({
         estado: 0,
-        mensaje: "Faltan datos",
+        mensaje: "Faltan el nombre",
         data: [],
       });
-    } else {
+    } else if (lastname == undefined) {
+        res.status(400).json({
+          estado: 0,
+          mensaje: "Faltan el apellido",
+          data: [],
+        });
+      } else if ( user == undefined ) {
+        res.status(400).json({
+          estado: 0,
+          mensaje: "Falta el nombre de usuario",
+          data: [],
+        });
+      } else if ( email == undefined) {
+        res.status(400).json({
+          estado: 0,
+          mensaje: "Falta el email",
+          data: [],
+        });
+      } else if ( svpassword == undefined) {
+        res.status(400).json({
+          estado: 0,
+          mensaje: "Falta la contraseña",
+          data: [],
+        });
+      } else {
       const existingUser = await User.findOne({
         $or: [{ user: user }, { email: email }],
       });

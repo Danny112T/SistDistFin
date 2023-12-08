@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Task = require("../models/tasks.model");
 const User = require("../models/users.model");
 
@@ -35,38 +36,39 @@ exports.getAllTasks = async (req, res) => {
     }
 };
 
-exports.getTaskByTitle = async (req, res) => {
-    const { title } = req.params;
-    try {
-        if (title == undefined) {
-            return res.status(400).json({
-                estado: 0,
-                mensaje: "Falta el titulo de la tarea",
-                data: [],
-            });
-        } else {
-            const task = await Task.findOne({ title }, {userId: req.user.id } ).exec();
-            if (!task) {
-                res.status(404).json({
-                    estado: 0,
-                    mensaje: "Tarea no encontrada",
-                    data: [],
-                });
-            } else {
-                res.status(200).json({
-                    estado: 1,
-                    mensaje: "Tarea obtenida correctamente",
-                    data: [task],
-                });
-            }
-        }
-    } catch (error) {
-        console.log(error);
-        res
-            .status(500)
-            .json({ estado: 0, mensaje: "Ocurrio un error desconocido", data: [] });
+exports.getTaskById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (!id) {
+      return res.status(400).json({
+        estado: 0,
+        mensaje: "Falta el id de la tarea",
+        data: [],
+      });
+    } else {
+      const task = await Task.findById(id);
+      if (!task) {
+        res.status(404).json({
+          estado: 0,
+          mensaje: "Tarea no encontrada",
+          data: [],
+        });
+      } else {
+        res.status(200).json({
+          estado: 1,
+          mensaje: "Tarea obtenida correctamente",
+          data: [task],
+        });
+      }
     }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ estado: 0, mensaje: "Ocurrio un error desconocido", data: [] });
+  }
 };
+
 
 exports.addTask = async (req, res) => {
   const { title, description } = req.body;
