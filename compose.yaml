@@ -13,8 +13,24 @@ services:
       context: .
     environment:
       NODE_ENV: production
+      PORT: ${PORT}
+      HOST: ${HOST}
+      JWT_SECRET: ${JWT_SECRET}
+      DB_HOST: ${DB_HOST}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_PORT: ${DB_PORT}
+    links:
+      - mongo
+    depends_on:
+      - mongo
     ports:
       - 3000:3000
+  mongo:
+    container_name: mimongodb
+    image: mongo
+    ports:
+      - 27017:27017
+
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
