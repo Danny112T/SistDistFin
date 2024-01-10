@@ -4,7 +4,7 @@ require("dotenv").config();
 const uriLocal = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`;
 const uriRemota = process.env.DB_URI;
 
-mongoose.connect(uriLocal || uriRemota, {
+mongoose.connect(uriRemota || uriLocal, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(()=>console.log("Conexión exitosa a la base de datos :D")).catch((err)=>console.log("Error: " + err));
