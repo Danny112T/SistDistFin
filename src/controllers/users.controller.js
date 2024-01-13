@@ -251,7 +251,7 @@ exports.login = async (req, res) => {
               .status(200)
               .json({ estado: 1, mensaje: "Login Successful", token: token });
           } else {
-            res.status(401).json({ estado: 0, mensaje: "Unauthorized" });
+            res.status(401).json({ estado: 0, mensaje: "Correo o contraseña incorrectas" });
           }
         } else {
           res
